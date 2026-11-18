@@ -1,0 +1,89 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Research Mentor Finder — research mentor discovery and reviewed outreach drafts."><title>Find research mentors who match your interests · Research Mentor Finder</title><style>body{margin:0;background:#f5f8fc;color:#14243b;font:17px/1.65 system-ui,sans-serif}header,main,footer{max-width:900px;margin:auto;padding:24px}header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;border-bottom:1px solid #dce4ee}nav{display:flex;flex-wrap:wrap;gap:18px}a{color:#145bb7}h1{font-size:clamp(28px,5vw,42px);line-height:1.2}h2{font-size:23px}section{margin:30px 0}p{overflow-wrap:anywhere}main{min-height:65vh}footer{border-top:1px solid #dce4ee;font-size:14px}.notice{padding:18px;border:1px solid #dce4ee;border-radius:12px;background:white}a:focus-visible{outline:3px solid #145bb7;outline-offset:4px}html{color-scheme:light}.theme-dark-label{display:none}html[data-theme="dark"]{color-scheme:dark}html[data-theme="dark"] body{background:#0c1422;color:#edf3fb}html[data-theme="dark"] a{color:#93c5fd}html[data-theme="dark"] :is(header,footer,.notice){border-color:#344359}html[data-theme="dark"] .notice{background:#152033;color:#edf3fb}html[data-theme="dark"] .theme-light-label{display:none}html[data-theme="dark"] .theme-dark-label{display:inline}button:focus-visible{outline:3px solid #509bf3;outline-offset:4px}/* Shared with the standalone public pages. The 44px target supports touch. */
+button.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 68px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-toggle-track {
+  position: relative;
+  display: block;
+  width: 64px;
+  height: 34px;
+  border: 1px solid #cedbea;
+  border-radius: 999px;
+  background: #eaf0f8;
+  box-shadow: inset 0 1px 2px #14243b0d;
+  transition: background-color 240ms ease, border-color 240ms ease, box-shadow 180ms ease;
+}
+.theme-toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 5px #14243b24;
+  transition: transform 240ms cubic-bezier(.22,.68,0,1.15), background-color 240ms ease;
+}
+.theme-toggle-track svg {
+  position: absolute;
+  top: 8px;
+  width: 16px;
+  height: 16px;
+  transition: color 240ms ease, transform 240ms ease;
+}
+.theme-toggle-sun { left: 8px; color: #956208; }
+.theme-toggle-moon { right: 8px; color: #667992; }
+button.theme-toggle:hover .theme-toggle-track { border-color: #8faacf; box-shadow: 0 0 0 3px #2571ca12; }
+button.theme-toggle:focus-visible { outline: 2px solid #2571ca; outline-offset: 3px; }
+button.theme-toggle:active .theme-toggle-track { transform: scale(.96); }
+.theme-toggle-label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.theme-dark-label { display: none; }
+html[data-theme="dark"] .theme-toggle-track { background: #24364f; border-color: #455b79; }
+html[data-theme="dark"] .theme-toggle-thumb { transform: translateX(30px); background: #dbeaff; box-shadow: 0 2px 6px #0005; }
+html[data-theme="dark"] .theme-toggle-sun { color: #9aaec9; transform: rotate(45deg); }
+html[data-theme="dark"] .theme-toggle-moon { color: #244b7e; }
+html[data-theme="dark"] .theme-light-label { display: none; }
+html[data-theme="dark"] .theme-dark-label { display: inline; }
+html.theme-transition :is(body,header,footer,main,section,article,button,input,select,textarea,a,.card,.notice,.panel-aqua) {
+  transition-property: background-color, color, border-color, box-shadow;
+  transition-duration: 240ms;
+  transition-timing-function: ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-track, .theme-toggle-thumb, .theme-toggle-track svg,
+  html.theme-transition :is(body,header,footer,main,section,article,button,input,select,textarea,a,.card,.notice,.panel-aqua) { transition: none; }
+}
+
+/* A focused welcome page, consistent with the application. */
+header,main,footer{max-width:1088px;padding-left:24px;padding-right:24px}header{align-items:center;padding-top:20px;padding-bottom:20px}header>a{font-weight:750;letter-spacing:-.03em;text-decoration:none;color:inherit}nav{align-items:center;gap:16px}nav>a{font-size:14px;text-decoration:none}nav>a:hover{text-decoration:underline}main{padding-top:56px;padding-bottom:40px}h1{max-width:780px;font-size:clamp(36px,5.5vw,64px);letter-spacing:-.045em;line-height:1.1;margin:14px 0 22px;text-wrap:pretty}h2{letter-spacing:-.025em;line-height:1.3}main>p{max-width:700px;color:#52627a}.welcome-eyebrow{font-size:12px;font-weight:750;letter-spacing:.13em;text-transform:uppercase;color:#1f62b6}.welcome-actions{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0 48px}.welcome-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 20px;border:1px solid #dce4ee;border-radius:12px;background:white;text-decoration:none;font-size:15px;font-weight:650;line-height:1.5}.welcome-actions a:first-child{background:#2571ca;border-color:#2571ca;color:white;box-shadow:0 4px 12px #2571ca26}main>section{padding:28px;border:1px solid #dce4ee;background:white;border-radius:20px;box-shadow:0 8px 28px #0f172a09;margin:22px 0}section h2{margin-top:0}section p:last-child{margin-bottom:0}section ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 40px;padding-left:24px}li{padding-left:6px}li strong{display:block}li::marker{color:#1f62b6;font-weight:750}.notice{border-left:4px solid #2571ca}footer{padding-top:24px;padding-bottom:32px;color:#52627a}html[data-theme=dark] main>p,html[data-theme=dark] footer{color:#b7c5d9}html[data-theme=dark] main>section,html[data-theme=dark] .welcome-actions a{background:#152033;border-color:#344359}html[data-theme=dark] .welcome-actions a:first-child{background:#2571ca;border-color:#2571ca;color:white}html[data-theme=dark] :is(.welcome-eyebrow,li::marker){color:#93c5fd}@media(max-width:600px){main{padding-top:32px}header,main,footer{padding-left:20px;padding-right:20px}main>section{padding:22px}section ol{grid-template-columns:1fr}.welcome-actions{margin-bottom:32px}.welcome-actions a{flex:1 1 160px}h1{overflow-wrap:anywhere}}@media(prefers-reduced-motion:no-preference){.welcome-actions a{transition:box-shadow .18s ease,background-color .18s ease}.welcome-actions a:hover{box-shadow:0 5px 16px #2571ca24}}
+</style><script>(function(){
+  var key='rmf-theme';
+  var media=window.matchMedia('(prefers-color-scheme: dark)');
+  function saved(){try{return localStorage.getItem(key);}catch(e){return null;}}
+  function apply(value){document.documentElement.dataset.theme=value==='dark'?'dark':'light';}
+  function preferred(){var value=saved();return value==='dark'||value==='light'?value:media.matches?'dark':'light';}
+  apply(preferred());
+  var transitionTimer;
+  document.addEventListener('click',function(event){
+    var target=event.target;
+    if(!(target instanceof Element)||!target.closest('button[data-theme-toggle]'))return;
+    var value=document.documentElement.dataset.theme==='dark'?'light':'dark';
+    clearTimeout(transitionTimer);
+    document.documentElement.classList.add('theme-transition');
+    apply(value);try{localStorage.setItem(key,value);}catch(e){}
+    transitionTimer=setTimeout(function(){document.documentElement.classList.remove('theme-transition');},280);
+  });
+  window.addEventListener('storage',function(event){if(event.key===key||event.key===null)apply(preferred());});
+  media.addEventListener('change',function(){if(saved()!=='dark'&&saved()!=='light')apply(preferred());});
+})();</script></head><body><header><a href="/">Research Mentor Finder</a><nav aria-label="Information"><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/contact">Contact</a><button type="button" data-theme-toggle class="theme-toggle"><span class="theme-toggle-track" aria-hidden="true"><span class="theme-toggle-thumb"></span><svg class="theme-toggle-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg><svg class="theme-toggle-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.9 13A9 9 0 0 1 11 3.1a9 9 0 1 0 9.9 9.9Z"/></svg></span><span class="theme-toggle-label theme-light-label">Dark mode</span><span class="theme-toggle-label theme-dark-label">Light mode</span></button></nav></header><main><div class="welcome-eyebrow">A starting point for student researchers</div><h1>Find research mentors who match your interests</h1><p>Research Mentor Finder helps students explore faculty research from published university sources, build a research-interest profile, save researchers, and prepare individual outreach drafts.</p><div class="welcome-actions"><a href="/start-research">Find your first research step</a><a href="/discover">Explore researchers</a></div><section><h2>From an interest to a thoughtful first email</h2><ol><li><strong>Find relevant research.</strong> Choose an interest or search the directory. A research profile helps personalize your results.</li><li><strong>Check the evidence.</strong> Inspect the matching terms and stored research details, then open the original university source.</li><li><strong>Compare your shortlist.</strong> Save researchers and compare up to three by research focus, location, and profile fit.</li><li><strong>Prepare your message.</strong> Write and review one editable outreach draft. Copy it into your email app when you are ready.</li></ol><p>Résumé import suggests skills, courses and experience for you to review before adding them to your profile.</p></section><section><h2>New to research?</h2><p><a href="/start-research">Find your first research step</a>: understand a field, try a small learning activity, and write your own starting question. <a href="/opportunities">Explore source-checked programs and public activities</a>, including official mentoring pathways. A program pathway does not confirm an individual professor has an opening. These app links require pilot access.</p></section><section><h2>Start with a research question</h2><p>Example searches: <a href="/discover?q=robotics">robotics</a>, <a href="/discover?q=climate">climate and sustainability</a>, or <a href="/discover?q=astronomy">astronomy</a>. Directory links currently require pilot access.</p></section><section class="notice"><h2>Private pilot</h2><p>The app is currently being tested behind a pilot password. <a href="/account">Open the private app</a> if you already have pilot access.</p><p>Google sign-in identifies your account. Hosted Gmail connections and paid AI explanations are currently unavailable. Outreach drafts require your review; the app does not automatically send email.</p></section><section><h2>Before you use it</h2><p>Researcher information can change. Verify details on the official university page. Recommendations do not guarantee a position or a response.</p><p>Read our <a href="/privacy">Privacy</a> and <a href="/terms">Terms</a>, or <a href="/contact">contact us</a> with questions or researcher corrections.</p></section></main><footer>Research Mentor Finder · <a href="mailto:researchmentorfinder@gmail.com">Contact support</a></footer></body></html>

@@ -1,0 +1,86 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Research Mentor Finder — research mentor discovery and reviewed outreach drafts."><title>Privacy · Research Mentor Finder</title><style>body{margin:0;background:#f5f8fc;color:#14243b;font:17px/1.65 system-ui,sans-serif}header,main,footer{max-width:900px;margin:auto;padding:24px}header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;border-bottom:1px solid #dce4ee}nav{display:flex;flex-wrap:wrap;gap:18px}a{color:#145bb7}h1{font-size:clamp(28px,5vw,42px);line-height:1.2}h2{font-size:23px}section{margin:30px 0}p{overflow-wrap:anywhere}main{min-height:65vh}footer{border-top:1px solid #dce4ee;font-size:14px}.notice{padding:18px;border:1px solid #dce4ee;border-radius:12px;background:white}a:focus-visible{outline:3px solid #145bb7;outline-offset:4px}html{color-scheme:light}.theme-dark-label{display:none}html[data-theme="dark"]{color-scheme:dark}html[data-theme="dark"] body{background:#0c1422;color:#edf3fb}html[data-theme="dark"] a{color:#93c5fd}html[data-theme="dark"] :is(header,footer,.notice){border-color:#344359}html[data-theme="dark"] .notice{background:#152033;color:#edf3fb}html[data-theme="dark"] .theme-light-label{display:none}html[data-theme="dark"] .theme-dark-label{display:inline}button:focus-visible{outline:3px solid #509bf3;outline-offset:4px}/* Shared with the standalone public pages. The 44px target supports touch. */
+button.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 68px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-toggle-track {
+  position: relative;
+  display: block;
+  width: 64px;
+  height: 34px;
+  border: 1px solid #cedbea;
+  border-radius: 999px;
+  background: #eaf0f8;
+  box-shadow: inset 0 1px 2px #14243b0d;
+  transition: background-color 240ms ease, border-color 240ms ease, box-shadow 180ms ease;
+}
+.theme-toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 5px #14243b24;
+  transition: transform 240ms cubic-bezier(.22,.68,0,1.15), background-color 240ms ease;
+}
+.theme-toggle-track svg {
+  position: absolute;
+  top: 8px;
+  width: 16px;
+  height: 16px;
+  transition: color 240ms ease, transform 240ms ease;
+}
+.theme-toggle-sun { left: 8px; color: #956208; }
+.theme-toggle-moon { right: 8px; color: #667992; }
+button.theme-toggle:hover .theme-toggle-track { border-color: #8faacf; box-shadow: 0 0 0 3px #2571ca12; }
+button.theme-toggle:focus-visible { outline: 2px solid #2571ca; outline-offset: 3px; }
+button.theme-toggle:active .theme-toggle-track { transform: scale(.96); }
+.theme-toggle-label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.theme-dark-label { display: none; }
+html[data-theme="dark"] .theme-toggle-track { background: #24364f; border-color: #455b79; }
+html[data-theme="dark"] .theme-toggle-thumb { transform: translateX(30px); background: #dbeaff; box-shadow: 0 2px 6px #0005; }
+html[data-theme="dark"] .theme-toggle-sun { color: #9aaec9; transform: rotate(45deg); }
+html[data-theme="dark"] .theme-toggle-moon { color: #244b7e; }
+html[data-theme="dark"] .theme-light-label { display: none; }
+html[data-theme="dark"] .theme-dark-label { display: inline; }
+html.theme-transition :is(body,header,footer,main,section,article,button,input,select,textarea,a,.card,.notice,.panel-aqua) {
+  transition-property: background-color, color, border-color, box-shadow;
+  transition-duration: 240ms;
+  transition-timing-function: ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-track, .theme-toggle-thumb, .theme-toggle-track svg,
+  html.theme-transition :is(body,header,footer,main,section,article,button,input,select,textarea,a,.card,.notice,.panel-aqua) { transition: none; }
+}
+</style><script>(function(){
+  var key='rmf-theme';
+  var media=window.matchMedia('(prefers-color-scheme: dark)');
+  function saved(){try{return localStorage.getItem(key);}catch(e){return null;}}
+  function apply(value){document.documentElement.dataset.theme=value==='dark'?'dark':'light';}
+  function preferred(){var value=saved();return value==='dark'||value==='light'?value:media.matches?'dark':'light';}
+  apply(preferred());
+  var transitionTimer;
+  document.addEventListener('click',function(event){
+    var target=event.target;
+    if(!(target instanceof Element)||!target.closest('button[data-theme-toggle]'))return;
+    var value=document.documentElement.dataset.theme==='dark'?'light':'dark';
+    clearTimeout(transitionTimer);
+    document.documentElement.classList.add('theme-transition');
+    apply(value);try{localStorage.setItem(key,value);}catch(e){}
+    transitionTimer=setTimeout(function(){document.documentElement.classList.remove('theme-transition');},280);
+  });
+  window.addEventListener('storage',function(event){if(event.key===key||event.key===null)apply(preferred());});
+  media.addEventListener('change',function(){if(saved()!=='dark'&&saved()!=='light')apply(preferred());});
+})();</script></head><body><header><a href="/">Research Mentor Finder</a><nav aria-label="Information"><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/contact">Contact</a><button type="button" data-theme-toggle class="theme-toggle"><span class="theme-toggle-track" aria-hidden="true"><span class="theme-toggle-thumb"></span><svg class="theme-toggle-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg><svg class="theme-toggle-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.9 13A9 9 0 0 1 11 3.1a9 9 0 1 0 9.9 9.9Z"/></svg></span><span class="theme-toggle-label theme-light-label">Dark mode</span><span class="theme-toggle-label theme-dark-label">Light mode</span></button></nav></header><main><h1>Privacy</h1><section> <h2 >Public browsing</h2> <p > Searching the directory needs no account. Searches and the filters you choose are sent to the server to run the search. The app does not keep an account-linked search history. Server logs and any existing search caches may still contain request information. </p> <p > To limit excessive requests, the app temporarily counts requests using a protected identifier derived from your network address. These counters stay in server memory, expire after their short limit window, and are not saved as account history. People using the same network may share a limit. </p> </section> <section> <h2 >Optional AI explanations</h2> <p > Paid AI explanations are disabled in this release. If enabled in a future release, requesting one sends selected interests, skills, coursework, and preferences with public researcher information to the AI provider. Account addresses, private outreach notes, and Gmail contents are excluded from that explanation context. </p> </section> <section> <h2 >Hosting and service providers</h2><p>Unsaved outreach edits may be kept temporarily in this browser tab for recovery, separately for each account. Recovery is cleared after a successful save, sign-out, or account deletion in this tab. Closing the tab clears its temporary recovery; use Save draft to keep edits in your account.</p><p>Shortlist comparison selections are also stored separately for each account in this browser tab. They clear when you sign out, delete your account in this tab, or close the tab; comparison selections do not synchronize across devices.</p> <p > The hosted app runs on Railway. Account profiles, saved researchers, and outreach records are stored on the server. Encrypted managed backups and deletion receipts are stored separately in private Railway storage; the backup decryption key is kept outside that storage. Railway provides both the app hosting and backup storage. </p> <p > Google handles sign-in and supplies your account identifier, email address, name, and profile image. Connecting Gmail is a separate optional permission; it is currently unavailable in the hosted release. Your sign-in does not by itself grant Gmail access. </p> </section> <section> <h2 >Keeping and removing your data</h2> <p > Signing out ends your session; it does not delete your profile, saved researchers, or outreach records. We keep live account data until you choose Delete my account on the account page. Deletion removes your live profile, saved researchers, outreach records, sessions, stored Gmail credentials and account-linked pending connections. Signing in again creates an empty account. Your messages and drafts already in Gmail are unaffected. </p> <p > We attempt to revoke Gmail access with Google. If Google cannot confirm revocation, local credentials are still removed and the deletion result directs you to your Google Account connections. A minimal receipt containing a hash of the account identifier and deletion time is retained to prevent accidentally restoring deleted account data. </p> <p > New managed backups are encrypted and made daily. Managed backups and operational logs expire after 30 days, checked at server startup and hourly while the server is running. Expiry catches up after downtime. Managed logs contain event categories rather than request contents. An independent deletion ledger is kept without automatic expiry; operators must apply it before restoring a backup. </p> <p > Historical pre-launch manual backups, logs and review evidence remain private and outside automatic managed expiry. They are scheduled for an operator retention review by November 17, 2026; this is a review date, not an automatic deletion guarantee. Account-bearing copies are not published or used as public demo data. New public account data is not copied into manual development fixtures. Account deletion does not automatically erase historical copies; contact us for review of those copies. Recovery must apply deletion receipts before restoring account data. Browser data on other devices and data held by Google or an AI provider are separate. Public researcher records and redacted non-personal release evidence may be retained separately. </p> </section> <section> <h2 >When you sign in</h2> <p > Signing in stores your saved researchers, outreach records, profile, and any Gmail connection against your account. Your session is held in an HttpOnly cookie and expires after a fixed number of days. </p> </section> <section> <h2 >Email handling</h2> <p > If you connect Gmail, the app requests permission to create drafts and to read message metadata so it can check whether your draft was sent or a reply arrived. Message bodies are never read, and no email is ever sent automatically. </p> </section> <section> <h2 >Résumé import</h2> <p > Choosing a résumé sends its contents to our server for text extraction. The original file and extracted preview are not saved by the app or sent to an AI provider. Review and edit the suggestions before applying them. Only the skills, coursework, and experience you apply become part of your stored profile and its managed backups. The selected filename stays in this browser. Do not import details you want to keep private. </p> </section> <section> <h2 >Public researcher data</h2> <p > Researcher names, titles, departments, and published contact details come from official university sources and are public information. We collect them to help you find a mentor, not to build a profile about you. </p> </section> <section> <h2 >Questions and privacy requests</h2> <p > For questions about your data or help with a privacy request, email <a href="mailto:researchmentorfinder@gmail.com" > researchmentorfinder@gmail.com </a> . Please do not include passwords, access tokens, or sensitive personal documents. </p> </section><section><h2>Research starting notes and pathway filters</h2><p>Interests and starting notes entered in Research Starter, and school-level filters in the opportunity collection, stay in the current page. They are not saved to your account or sent to AI. Refreshing or leaving the page discards them. Copying notes puts them on your device clipboard. Provider links open separate websites with their own policies.</p></section><section><h2>Sign-in across tabs</h2><p>A non-identifying change signal is stored in browser storage so open tabs can recheck sign-in. It contains no account identifier or session token.</p></section><section><h2>Aggregate usage measurement</h2><p>We count page categories and successful feature requests in daily totals. These counters store no names, emails, account or visitor identifiers, network addresses, search text, résumé content, or researcher IDs. They use no analytics cookies or third-party analytics service. Repeated actions count again; this does not measure unique visitors. Daily totals are kept for 90 days. Collection respects Do Not Track and Global Privacy Control signals where available. A private owner dashboard also shows the total number of Google accounts still stored. Hosting providers may maintain separate request logs.</p><p>A profile’s report-issue link opens an email draft containing the public researcher’s name and profile link. Nothing is sent until you choose to send it. Your email provider handles that message under its own policies.</p></section></main><footer>Research Mentor Finder · <a href="mailto:researchmentorfinder@gmail.com">Contact support</a></footer></body></html>

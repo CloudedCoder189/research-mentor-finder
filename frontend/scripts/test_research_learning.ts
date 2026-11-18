@@ -1,0 +1,47 @@
+import assert from "node:assert/strict";
+import { RESEARCH_DIRECTIONS } from "../data/researchDirections.ts";
+import { RESEARCH_OPPORTUNITIES } from "../data/researchOpportunities.ts";
+import { learningBrief, matchesConcept, opportunityStatus, researcherSearchHref, safeSourceUrl, schoolFit, sourceIsFresh, suggestDirections } from "../lib/researchLearning.ts";
+
+assert.equal(matchesConcept("artificial intelligence", "art"), false);
+assert.equal(matchesConcept("local flooding sensors", "flood"), true);
+assert.equal(matchesConcept("a.+b", "a.+b"), true);
+assert.deepEqual(suggestDirections("unmappeddiscipline", RESEARCH_DIRECTIONS), []);
+assert.deepEqual(suggestDirections("   ", RESEARCH_DIRECTIONS), []);
+assert.equal(suggestDirections("historical archives and language", RESEARCH_DIRECTIONS)[0].id, "humanities");
+assert.ok(suggestDirections("robotics sensors and climate data", RESEARCH_DIRECTIONS).length >= 2);
+assert.ok(!suggestDirections("machine learning algorithms", RESEARCH_DIRECTIONS).some((row) => row.id === "behavior"));
+assert.equal(suggestDirections("education and human learning", RESEARCH_DIRECTIONS)[0].id, "behavior");
+const now = new Date("2026-10-13T12:00:00Z");
+assert.equal(sourceIsFresh("2026-10-14", now), false);
+assert.equal(sourceIsFresh("2026-09-13", now), false);
+assert.equal(sourceIsFresh("2026-10-13", now), true);
+assert.equal(sourceIsFresh("invalid", now), false);
+assert.equal(sourceIsFresh("2026-02-30", new Date("2026-03-03T12:00:00Z")), false);
+assert.equal(sourceIsFresh("2026-09-14", now), true);
+const nih = RESEARCH_OPPORTUNITIES.find((row) => row.id === "nih-sip")!;
+const simr = RESEARCH_OPPORTUNITIES.find((row) => row.id === "simr")!;
+const nsf = RESEARCH_OPPORTUNITIES.find((row) => row.id === "nsf-reu")!;
+assert.equal(opportunityStatus(nih, now), "Applications open when checked");
+assert.equal(opportunityStatus(nih, new Date("2026-11-13T00:00:00Z")), "Source review overdue");
+assert.equal(opportunityStatus(nih, new Date(nih.deadline!)), "Published deadline passed");
+assert.equal(schoolFit(nih, "hs-junior"), "different-level");
+assert.equal(schoolFit(nih, "entering-college"), "compatible");
+assert.equal(schoolFit(simr, "college"), "different-level");
+assert.equal(schoolFit(simr, ""), "check");
+assert.equal(schoolFit(nsf, "entering-college"), "compatible");
+assert.equal(schoolFit(RESEARCH_OPPORTUNITIES.find((row) => row.id === "zooniverse")!, "hs-younger"), "check");
+assert.equal(safeSourceUrl("javascript:alert(1)"), null);
+assert.equal(safeSourceUrl("https://username:password@example.test"), null);
+assert.equal(safeSourceUrl("https://example.edu/research"), "https://example.edu/research");
+const href = researcherSearchHref("<script>&x=" + "x".repeat(320));
+assert.equal(new URL(href, "https://example.test").searchParams.get("q")!.length, 300);
+assert.ok(!href.includes("<script>"));
+const brief = learningBrief(RESEARCH_DIRECTIONS[0], "My own question", "", "");
+assert.ok(brief.includes("My own question") && brief.includes("not a completed research plan"));
+for (const row of RESEARCH_OPPORTUNITIES) {
+  assert.ok(safeSourceUrl(row.source));
+  assert.ok(row.requirements.length && row.mentoring && row.reviewed);
+  assert.ok(!/guaranteed (?:admission|mentor|publication)/i.test(row.description));
+}
+console.log("Research learning checks passed: grounded matching, unknown eligibility, expiry, deadline boundaries, safe sources and student-owned notes.");

@@ -1,0 +1,33 @@
+RESEARCH MENTOR FINDER V9.4.0 — COMPLETE PROJECT
+
+This folder includes:
+- Full application source code
+- All 14 supported university connectors
+- The prepared 430-record base SQLite database
+- 141 automated tests
+- Windows setup and launch scripts
+- The one-time V9.4 audit-repair workflow
+
+IMPORTANT FOR AN EXISTING 826-RECORD INSTALLATION
+Use the V9.4 PATCH on top of the current working folder. Keep the existing:
+- .env
+- venv
+- data\professors.db
+
+Then read REPAIR_V9_4.txt.
+
+FIRST RUN ON A NEW FOLDER
+1. Copy .env.example and rename the copy to .env.
+2. Add your OpenAI API key to .env.
+3. Optionally add a real contact email to SCRAPER_CONTACT_EMAIL.
+4. Run: .\setup_windows.bat
+5. Run: .\run_windows.bat
+
+LATER RUNS
+- Run only: .\run_windows.bat
+- Run setup again only when packages change or the venv folder is removed.
+
+SECURITY
+- Never upload or share .env.
+- Back up data\professors.db before large refreshes.
+- Caltech records are saved only when the professor's own public email is found; assistant emails are not substituted.

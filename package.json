@@ -1,0 +1,15 @@
+{
+  "name": "college-professor-finder-v9.3.1-complete",
+  "version": "1.0.0",
+  "description": "An AI-powered Streamlit application that helps students discover university researchers by research-interest similarity. It collects professional information intentionally published on academic websites, standardizes research topics, ranks natural-language queries with cached embeddings plus keyword matching, verifies optional personal/lab links, and exports contact-ready CSV files.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

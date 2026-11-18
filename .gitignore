@@ -1,0 +1,52 @@
+.env
+.env.*
+!.env.example
+!.env.*.example
+.streamlit/secrets.toml
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+.DS_Store
+logs/
+*.log
+
+# SQLite sidecar and temporary databases are private/runtime files.
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+*.sqlite
+*.sqlite3
+test-runtime/
+
+# Runtime databases also contain private account/profile/outreach data.
+# Publish an explicitly exported public dataset instead of any runtime DB.
+
+# Per-user Google OAuth tokens and pending OAuth states are private secrets.
+data/gmail_tokens/
+
+# Frontend dependencies and generated files
+node_modules/
+.next/
+*.tsbuildinfo
+coverage/
+dist/
+build/
+
+# Private development and review artifacts
+evidence/
+backups/
+design-references/
+launch-kit-2026-11-05/
+.cursor/
+
+# Editor and operating system files
+.vscode/
+Thumbs.db
+
+# Historical pilot datasets — retained locally
+deploy/pilot/reviewed-professors.json
+deploy/pilot/link-repairs-20261025.json

@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --color-ink: 16 24 40;
+  --color-ink-50: 248 250 252;
+  --color-ink-100: 238 242 247;
+  --color-ink-200: 217 226 236;
+  --color-ink-500: 59 74 95;
+  --color-ink-600: 44 58 79;
+  --color-ink-700: 33 48 74;
+  --color-ink-800: 26 39 69;
+  --color-ink-900: 15 27 51;
+  --color-ink-950: 8 17 38;
+  --color-brand-50: 234 242 251;
+  --color-brand-100: 216 230 247;
+  --color-brand-200: 184 209 239;
+  --color-brand-300: 143 179 228;
+  --color-brand-400: 95 147 214;
+  --color-brand-500: 58 130 212;
+  --color-brand-600: 37 113 202;
+  --color-brand-700: 31 98 182;
+  --color-brand-800: 27 80 150;
+  --color-brand-900: 22 63 120;
+  --color-accent-50: 234 249 249;
+  --color-accent-100: 217 243 244;
+  --color-accent-200: 189 232 236;
+  --color-accent-300: 152 212 219;
+  --color-accent-500: 113 189 201;
+  --color-accent-600: 78 158 172;
+  --color-accent-700: 29 110 116;
+  --color-paper: 244 248 251;
+  --color-surface: 255 255 255;
+  --color-border: 220 228 238;
+  --color-slate-50: 248 250 252;
+  --color-slate-100: 241 245 249;
+  --color-slate-200: 226 232 240;
+  --color-slate-300: 203 213 225;
+  --color-slate-400: 94 108 130;
+  --color-slate-500: 94 108 130;
+  --color-slate-600: 71 85 105;
+  --color-slate-700: 51 65 85;
+  --color-slate-800: 30 41 59;
+  --color-slate-900: 15 23 42;
+  --color-amber-50: 255 251 235;
+  --color-amber-200: 253 230 138;
+  --color-amber-500: 245 158 11;
+  --color-amber-600: 217 119 6;
+  --color-amber-700: 180 83 9;
+  --color-amber-800: 146 64 14;
+  --color-amber-900: 120 53 15;
+  --color-blue-50: 239 246 255;
+  --color-blue-200: 191 219 254;
+  --color-blue-500: 59 130 246;
+  --color-blue-700: 29 78 216;
+  --color-emerald-50: 236 253 245;
+  --color-emerald-200: 167 243 208;
+  --color-emerald-500: 16 185 129;
+  --color-emerald-700: 4 120 87;
+  --color-rose-50: 255 241 242;
+  --color-rose-200: 254 205 211;
+  --color-rose-600: 225 29 72;
+  --color-rose-700: 190 18 60;
+  --color-red-700: 185 28 28;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --color-paper: 12 20 34;
+  --color-surface: 21 32 51;
+  --color-border: 52 67 89;
+  --color-ink: 237 243 251;
+  --color-ink-50: 21 32 51;
+  --color-ink-100: 31 45 66;
+  --color-ink-200: 52 67 89;
+  --color-ink-500: 170 187 209;
+  --color-ink-600: 194 206 224;
+  --color-ink-700: 211 222 240;
+  --color-ink-800: 220 230 245;
+  --color-ink-900: 229 237 248;
+  --color-ink-950: 243 247 255;
+  --color-slate-50: 21 32 51;
+  --color-slate-100: 31 45 66;
+  --color-slate-200: 52 67 89;
+  --color-slate-300: 95 113 138;
+  --color-slate-400: 170 187 209;
+  --color-slate-500: 183 197 217;
+  --color-slate-600: 194 206 224;
+  --color-slate-700: 211 222 240;
+  --color-slate-800: 220 230 245;
+  --color-slate-900: 237 243 251;
+  --color-brand-50: 23 45 73;
+  --color-brand-100: 35 66 100;
+  --color-brand-200: 54 89 126;
+  --color-accent-50: 18 52 59;
+  --color-accent-100: 22 67 75;
+  --color-accent-200: 40 99 109;
+  --color-accent-600: 134 212 221;
+  --color-accent-700: 165 227 232;
+  --color-amber-50: 52 42 23;
+  --color-amber-200: 112 87 40;
+  --color-amber-600: 251 191 36;
+  --color-amber-700: 252 211 77;
+  --color-amber-800: 253 230 138;
+  --color-amber-900: 254 243 199;
+  --color-blue-50: 23 45 73;
+  --color-blue-200: 54 89 126;
+  --color-blue-700: 147 197 253;
+  --color-emerald-50: 18 54 44;
+  --color-emerald-200: 39 108 85;
+  --color-emerald-700: 110 231 183;
+  --color-rose-50: 59 32 48;
+  --color-rose-200: 119 66 87;
+  --color-rose-600: 253 164 175;
+  --color-rose-700: 254 205 211;
+  --color-red-700: 252 165 165;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: rgb(var(--color-paper));
+  color: rgb(var(--color-ink));
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: #bfdbfe;
+  color: #1e40af;
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-border bg-surface;
+    box-shadow: 0 2px 4px rgb(15 23 42 / 0.025), 0 8px 28px rgb(15 23 42 / 0.035);
+  }
+
+  .hairline {
+    @apply border-t border-border;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 focus-visible:ring-offset-surface;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-sm font-medium text-ink-700;
+  }
+
+  .panel-aqua {
+    @apply rounded-card border border-accent-200 bg-accent-50;
+  }
+
+  .chip-aqua {
+    @apply rounded-pill border border-accent-200 bg-accent-50 px-2.5 py-0.5 text-xs font-medium text-accent-700;
+  }
+
+  .chip-light {
+    @apply rounded-pill border border-brand-100 bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-700;
+  }
+}
+
+/* Shared polish keeps the existing theme tokens and native form controls. */
+.app-navigation { box-shadow: 0 4px 20px rgb(15 23 42 / 0.035); }
+.app-button { min-width: 0; max-width: 100%; overflow-wrap: anywhere; line-height: 1.5; text-wrap: pretty; }
+.app-button.bg-brand-600 { box-shadow: 0 3px 8px rgb(37 113 202 / 0.18); }
+.app-button.bg-brand-600:hover:not(:disabled) { box-shadow: 0 5px 14px rgb(37 113 202 / 0.24); }
+main :is(h1,h2,h3) { text-wrap: pretty; }
+main :is(input:not([type=checkbox]):not([type=radio]),select,textarea) {
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+main :is(input:not([type=checkbox]):not([type=radio]),select,textarea):hover:not(:disabled) {
+  border-color: rgb(var(--color-brand-300));
+}
+main :is(input[type=checkbox],input[type=radio]) { accent-color: rgb(var(--color-brand-600)); }
+.learning-intro {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 0.5rem 0 1.5rem;
+  border-bottom: 1px solid rgb(var(--color-border));
+  margin-bottom: 2rem;
+}
+.learning-intro-icon,.direction-choice-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.875rem;
+  background: rgb(var(--color-brand-50));
+  color: rgb(var(--color-brand-700));
+}
+.learning-intro-icon { width: 3rem; height: 3rem; }
+.learning-eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(var(--color-brand-700)); }
+.direction-choice {
+  min-width: 0;
+  border: 1px solid rgb(var(--color-border));
+  border-radius: 1rem;
+  padding: 1.25rem;
+  background: rgb(var(--color-surface));
+  text-align: left;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+.direction-choice-icon { width: 2.5rem; height: 2.5rem; }
+.direction-choice:hover { border-color: rgb(var(--color-brand-300)); box-shadow: 0 6px 22px rgb(15 23 42 / 0.06); }
+.direction-choice-selected { border-color: rgb(var(--color-brand-600)); background: rgb(var(--color-brand-50)); box-shadow: inset 0 0 0 1px rgb(var(--color-brand-600)); }
+.opportunity-card { border-top: 3px solid rgb(var(--color-brand-200)); }
+html[data-theme="dark"] :is(.learning-intro-icon,.direction-choice-icon,.learning-eyebrow) { color: #93c5fd; }
+@media (max-width: 479px) {
+  .learning-intro { flex-direction: column; gap: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* Preserve white-on-blue button contrast while lightening blue text on dark cards. */
+html[data-theme="dark"] :is(.text-brand-500,.text-brand-600,.text-brand-700,.text-brand-800) { color: #93c5fd; }
+html[data-theme="dark"] .text-brand-100 { color: #d8e6f7; }
+.theme-dark-label { display: none; }
+html[data-theme="dark"] .theme-light-label { display: none; }
+html[data-theme="dark"] .theme-dark-label { display: inline; }

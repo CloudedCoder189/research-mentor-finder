@@ -1,0 +1,50 @@
+{
+    admin off
+    auto_https off
+}
+:{$PORT:8080} {
+    header {
+        X-Content-Type-Options nosniff
+        Referrer-Policy no-referrer
+        X-Frame-Options DENY
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    }
+    handle /__pilot_health {
+        reverse_proxy 127.0.0.1:18503
+    }
+    handle /__pilot_monitor {
+        reverse_proxy 127.0.0.1:18503
+    }
+    # Public information pages contain no scripts or API calls.
+    handle / {
+        root * {$PUBLIC_INFO_ROOT:/app/deploy/pilot/public-info}
+        rewrite * /index.html
+        file_server
+    }
+    @information path /about /privacy /terms /contact
+    handle @information {
+        root * {$PUBLIC_INFO_ROOT:/app/deploy/pilot/public-info}
+        rewrite * {path}.html
+        file_server
+    }
+    handle {
+        basic_auth {
+            {$PILOT_BASIC_USER} {$PILOT_PASSWORD_HASH}
+        }
+        request_body {
+            max_size 1MB
+        }
+        @api path /api /api/*
+        handle @api {
+            reverse_proxy 127.0.0.1:18501 {
+                header_up -Authorization
+                header_up X-RMF-Client-IP {http.request.header.X-Real-IP}
+            }
+        }
+        handle {
+            reverse_proxy 127.0.0.1:13310 {
+                header_up -Authorization
+            }
+        }
+    }
+}
