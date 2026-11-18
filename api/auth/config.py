@@ -92,16 +92,11 @@ def cookie_secure() -> bool:
 
 
 def dev_login_allowed() -> bool:
-    """Developer-only bypass: identity comes from server env, never the client.
-
-    Enabled by default in ``local`` mode. Non-local deployments cannot opt in.
-    """
-    if app_mode() != "local":
-        return False
-    explicit = os.getenv("AUTH_ALLOW_DEV_LOGIN", "").strip().lower()
-    if explicit:
-        return explicit == "true"
-    return app_mode() == "local"
+    """Permit developer login only when explicitly enabled in local mode."""
+    return (
+        app_mode() == "local"
+        and os.getenv("AUTH_ALLOW_DEV_LOGIN", "").strip().lower() == "true"
+    )
 
 
 def dev_email() -> str:

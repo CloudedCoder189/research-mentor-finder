@@ -57,7 +57,7 @@ def test_me_unauthenticated(anonymous: TestClient) -> None:
         "authenticated": False,
         "user": None,
         "csrf_token": None,
-        "dev_login_available": True,
+        "dev_login_available": False,
         "local_import_available": False,
     }
 
@@ -244,3 +244,35 @@ def test_local_import_capability_is_not_offered_to_another_account(env):
     client = client_for_user("google:other-local-account", "other@example.test")
     assert client.get("/api/auth/me").json()["local_import_available"] is False
     assert client.post("/api/auth/import-local").status_code == 403
+
+
+@pytest.mark.parametrize(
+    "mode, setting, expected",
+    [
+        ("local", None, False),
+        ("local", "true", True),
+        ("production", "true", False),
+        ("public", "true", False),
+    ],
+)
+def test_dev_login_requires_explicit_local_opt_in(
+    monkeypatch, mode, setting, expected
+):
+    monkeypatch.setenv("APP_MODE", mode)
+
+    if setting is None:
+        monkeypatch.delenv("AUTH_ALLOW_DEV_LOGIN", raising=False)
+    else:
+        monkeypatch.setenv("AUTH_ALLOW_DEV_LOGIN", setting)
+
+    assert config.dev_login_allowed() is expected
+
+
+def test_dev_login_disabled_by_default(env, monkeypatch):
+    monkeypatch.setenv("APP_MODE", "local")
+    monkeypatch.delenv("AUTH_ALLOW_DEV_LOGIN", raising=False)
+
+    client = TestClient(create_app(), follow_redirects=False)
+    response = client.post("/api/auth/dev-login")
+
+    assert response.status_code == 404

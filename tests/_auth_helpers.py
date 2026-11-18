@@ -50,8 +50,14 @@ def client_for_user(
     return client
 
 
+
 def dev_login(client: TestClient) -> None:
-    response = client.post("/api/auth/dev-login")
+    from unittest.mock import patch
+
+    # Explicitly enable developer login only for this test request.
+    with patch.dict("os.environ", {"AUTH_ALLOW_DEV_LOGIN": "true"}):
+        response = client.post("/api/auth/dev-login")
+
     assert response.status_code == 200, response.text
 
 
