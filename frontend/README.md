@@ -53,8 +53,11 @@ account), and every personal screen is per-account and session-protected.
 
 - Sign in, then the onboarding wizard saves your profile to your account
   (`PUT /api/profile`; step progress stays in `rmf:onboarding:step`). At least one research
-  interest is required; every other step is skippable and editable later. The résumé file
-  name stays in browser storage (`rmf:profile:resume`) — the file itself is never uploaded.
+  interest is required; every other step is skippable and editable later. Optional résumé
+  import sends the selected PDF, DOCX, or TXT file to the backend for temporary parsing.
+  The original file and extraction preview are not saved by the app or sent to AI.
+  If the user reviews and applies suggestions, the selected profile fields and résumé
+  filename are saved with their account.
 - `/for-you` reads your account profile and sends it to `POST /api/recommendations` each
   time you change interests or filters. The backend reuses the live search/embedding
   infrastructure to rank real professors, returns a transparent `research_fit_score` with
