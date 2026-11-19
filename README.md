@@ -127,6 +127,7 @@ Researcher matches do not guarantee that a professor is accepting students or of
 - [Official university directory sources](docs/UNIVERSITY_SOURCES.md)
 - [Documentation index](docs/README.md), including archived development notes
 - [Reverse-proxy IP trust boundary](docs/PROXY_TRUST.md) for Railway deployments
+- [Safe deployment packaging](docs/DEPLOYMENT.md) and the staged Docker build context
 
 ## Privacy and Security
 

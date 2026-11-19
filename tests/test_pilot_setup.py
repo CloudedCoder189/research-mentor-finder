@@ -9,7 +9,7 @@ import pytest
 import database
 from deploy.pilot.provision import provision, settings, validate_gate
 from scripts.export_public_seed import export
-from scripts.prepare_pilot_package import selected_files, ROOT
+from scripts.prepare_pilot_package import selected_files, docker_context_allowlist, ROOT
 
 
 @pytest.fixture
@@ -92,3 +92,35 @@ def test_package_includes_every_frontend_alias_import():
             for alias in re.findall(r'["\'](@/[^"\']+)["\']',p.read_text(encoding="utf-8")):
                 base=alias[2:]
                 assert any(candidate in relative for candidate in [base,base+".ts",base+".tsx",base+".mjs",base+".js",base+"/index.ts",base+"/index.tsx"]), alias
+
+
+def test_checkout_dockerignore_denies_direct_builds():
+    """Public source checkout is not a deployment context with reviewed seed data."""
+    lines = [line.strip() for line in (ROOT / ".dockerignore").read_text(encoding="utf-8").splitlines()
+             if line.strip() and not line.startswith("#")]
+    assert lines == ["*"]
+
+
+def test_staged_docker_context_reincludes_only_explicit_files():
+    source = [
+        "requirements.txt", "api/main.py", "frontend/app/page.tsx",
+        "frontend/package.json", "deploy/pilot/public-seed.db",
+        "deploy/pilot/seed-report.json",
+    ]
+    lines = docker_context_allowlist(source).splitlines()
+    assert lines[2] == "*"
+    allowed = {line[1:] for line in lines if line.startswith("!")}
+    assert allowed == set(source) | {
+        "api", "frontend", "frontend/app", "deploy", "deploy/pilot",
+    }
+    assert not any("manifest" in path or ".env" in path for path in allowed)
+
+
+@pytest.mark.parametrize("path", [
+    "../private.txt", "/tmp/secrets.txt", ".env", "frontend/.env.local",
+    "data/users.db", "api/private.db", "frontend/node_modules/secret.js",
+    "deploy/pilot/private.pem", "backups/data.json",
+])
+def test_staged_docker_context_refuses_private_paths(path):
+    with pytest.raises(ValueError, match="Unsafe Docker context path"):
+        docker_context_allowlist(["api/main.py", path])
