@@ -1,8 +1,12 @@
-# V8 public deployment checklist
+# Historical Streamlit deployment checklist (V8)
 
-**Legacy Streamlit reference.** For the current React/FastAPI application, read
-DEPLOYMENT_PLAN.md and DATA_QUALITY_AUDIT.md. Do not use the settings below as
-its production recipe. No public deployment has been performed.
+**Not the deployment guide for the current application.** These notes describe an
+earlier Streamlit build, not the live Next.js/FastAPI application. To run the
+current application locally, use the [main README](README.md). The separate
+pilot deployment code is in [deploy/pilot](deploy/pilot), with production
+configuration checks in [api/production_config.py](api/production_config.py).
+The steps below are preserved as historical context, not a complete or
+validated production deployment recipe.
 
 ## Before publishing
 
@@ -36,9 +40,9 @@ All runtime SQLite databases and sidecar files are ignored. The current database
 also holds private profiles, sessions, and outreach. Do not publish it. Export a
 separate dataset containing only allowlisted public researcher fields.
 
-This older checklist describes the legacy Streamlit interface. For the current
-React/FastAPI prototype, follow `LOCAL_PROTOTYPE.md`; its AI explanation limits
-are separate from the legacy search budgets below.
+The current Next.js/FastAPI implementation has different deployment
+configuration and AI usage controls. Use the main README for local setup;
+do not treat the legacy budget settings below as production safeguards.
 
 ## Cost controls
 

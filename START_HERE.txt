@@ -1,33 +1,28 @@
-RESEARCH MENTOR FINDER V9.4.0 — COMPLETE PROJECT
+RESEARCH MENTOR FINDER — START HERE
 
-This folder includes:
-- Full application source code
-- All 14 supported university connectors
-- The prepared 430-record base SQLite database
-- 141 automated tests
-- Windows setup and launch scripts
-- The one-time V9.4 audit-repair workflow
+This repository contains the source code for the current Next.js frontend
+and FastAPI backend. The main README is the source of truth for setup:
 
-IMPORTANT FOR AN EXISTING 826-RECORD INSTALLATION
-Use the V9.4 PATCH on top of the current working folder. Keep the existing:
-- .env
-- venv
-- data\professors.db
+  README.md
+  https://github.com/CloudedCoder189/research-mentor-finder#readme
 
-Then read REPAIR_V9_4.txt.
+QUICK START (Windows, from the repository root)
+1. Install Python 3.12, Node.js 20.9+ and npm.
+2. Follow README.md to install backend and frontend dependencies.
+3. Seed the included fictional demonstration researchers using the command
+   in README.md. The production researcher database is not in GitHub.
+4. Start FastAPI on port 8000 and Next.js on port 3000 as shown in README.md.
 
-FIRST RUN ON A NEW FOLDER
-1. Copy .env.example and rename the copy to .env.
-2. Add your OpenAI API key to .env.
-3. Optionally add a real contact email to SCRAPER_CONTACT_EMAIL.
-4. Run: .\setup_windows.bat
-5. Run: .\run_windows.bat
+You do not need an OpenAI API key to try the local keyword-search demo.
+Optional features such as semantic search and Google sign-in need separate
+configuration. Developer sign-in is disabled unless expressly enabled for
+local development.
 
-LATER RUNS
-- Run only: .\run_windows.bat
-- Run setup again only when packages change or the venv folder is removed.
+The legacy Streamlit application (app.py, setup_windows.bat, and
+run_windows.bat) remains in the repository for historical compatibility.
+Those scripts are NOT the recommended way to start the current website.
 
-SECURITY
-- Never upload or share .env.
-- Back up data\professors.db before large refreshes.
-- Caltech records are saved only when the professor's own public email is found; assistant emails are not substituted.
+PRIVACY
+Real .env files, production databases, OAuth tokens, user profiles,
+and private outreach data are intentionally excluded from this repository.
+Do not commit real credentials or data.

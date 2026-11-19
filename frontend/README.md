@@ -1,22 +1,15 @@
-# Research Mentor Finder — Frontend (Phase 6, Phase 7)
+# Research Mentor Finder — Frontend
 
-Next.js + React + TypeScript + Tailwind frontend for the student-facing experience.
+Next.js 16 + React 19 + TypeScript + Tailwind frontend for the student-facing experience.
 
-## Dependency upgrade — 2026-10-05
+For a complete clean-install guide covering both the backend and frontend, see
+the [main README](../README.md). Use `npm ci` from this directory to install the
+committed lockfile. The frontend currently uses Next.js 16.4.6, React 19.3.0,
+and Lucide 1.52.0, with Node.js 20.9+ required. Run ESLint separately using
+`npm run lint`; Next.js does not run it as part of `npm run build`.
 
-Runtime now uses Next.js 16.3.8, React/React DOM 19.3.0 and Lucide 1.52.0.
-Node >=20.9 is required; this local prototype was tested with Node 24.19.0.
-Dependencies are installed independently; the original project's dependency
-directory is not used. Use the lockfile with `npm ci` for a reproducible install.
-Dynamic route props are awaited. `npm run lint` now invokes standalone ESLint;
-Next 16 does not run lint as part of its production build, so run it separately.
-
-The lint configuration retains targeted exceptions for intentional loading and
-account-reset state updates in effects. Compiler adoption is not part of this
-upgrade. Ref guards now update in committed layout effects. ESLint 9 remains
-required by the current bundled React lint plugin's peer range and is EOL;
-the full toolchain audit also retains upstream build-time findings. See
-`../FRONTEND_UPGRADE_STATUS.md` for versions, evidence and exact limitations.
+The frontend relies on the FastAPI backend for researcher discovery,
+profile data, and account-related features.
 
 Discover (manual search), professor profiles, the student profile/onboarding wizard,
 personalized **For You recommendations**, **Saved researchers**, the **Outreach dashboard**,
@@ -32,7 +25,7 @@ account), and every personal screen is per-account and session-protected.
 1. Start the backend (from the repo root):
 
    ```bash
-   venv\Scripts\python -m uvicorn api.main:app --port 8000
+   .venv\Scripts\python.exe -m uvicorn api.main:app --port 8000
    ```
 
 2. Start the frontend:
@@ -50,7 +43,8 @@ account), and every personal screen is per-account and session-protected.
   it also receives the CSRF token and forwards it on every non-GET request as
   `X-CSRF-Token` (`lib/api/client.ts` sets `credentials: "include"`).
 - The nav shows **Sign in with Google** (backend redirect) or, in `local` server mode, the
-  **Local developer account** one-click sign-in. Signed-in users see their name and a
+  **Local developer account** one-click sign-in only when `APP_MODE=local` and
+  `AUTH_ALLOW_DEV_LOGIN=true`. Signed-in users see their name and a
   **Sign out** action.
 - Saved, For You, Outreach, the composer, Gmail connection, and Account/Onboarding pages
   are wrapped in `RequireAuth`; signed-out visitors get a sign-in card instead.
@@ -116,20 +110,21 @@ account), and every personal screen is per-account and session-protected.
 ## Commands
 
 ```bash
-npm install
+npm ci
 npm run dev            # http://localhost:3000
-npm run lint           # next lint
+npm run lint           # ESLint
 npm run typecheck      # tsc --noEmit
 npm run build          # next build
 npm run smoke          # requires build first; starts server on :3210 and asserts routes
-npm run integration:smoke   # requires build first; starts FastAPI + frontend, signs in via dev-login, and asserts the live save/outreach/profile round-trips
+npm run integration:smoke   # advanced integration check; requires an isolated test database and explicit local dev-login configuration
 ```
 
 ## Notes
 
 - Accounts are backend Google Sign-In (`AUTH_CLIENT_ID`/`AUTH_CLIENT_SECRET` in `.env`) with
   HttpOnly session cookies and CSRF protection; the local developer account signs in
-  without Google keys in local mode. The student profile lives per-account on the backend;
+  without Google keys only if expressly enabled with `APP_MODE=local` and
+  `AUTH_ALLOW_DEV_LOGIN=true`. The student profile lives per-account on the backend;
   only the résumé file name stays in the browser.
 - The app never writes to professor rows; recommendations, explanations, saving, and
   outreach updates write only to user-scoped rows.
