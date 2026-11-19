@@ -3,7 +3,6 @@ import { join } from "node:path";
 import { mkdirSync } from "node:fs";
 const require = (id) => import(id).then((m) => m.default);
 
-const REPO = "C:\\Users\\nirmi\\Downloads\\college-professor-finder-v9.3.1-complete - Copy\\college-professor-finder-v9.3.1-complete";
 // playwright-core is installed in the repo frontend
 const pw = await require("playwright-core");
 

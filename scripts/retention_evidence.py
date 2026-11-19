@@ -53,7 +53,7 @@ def finish():
     count = 0
     for p in texts:
         text = p.read_text(encoding="utf-8")
-        redacted = text.replace("C:\\\\Users\\\\nirmi", "C:\\\\Users\\\\<user>").replace("C:\\Users\\nirmi", "C:\\Users\\<user>").replace("C:/Users/nirmi", "C:/Users/<user>")
+        redacted = re.sub(r"(?i)(\b[A-Z]:[\\/]+Users[\\/]+)[^\\/\s\"'<>]+", r"\g<1><user>", text)
         if redacted != text:
             count += 1
             p.write_text(redacted, encoding="utf-8")
