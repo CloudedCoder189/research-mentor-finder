@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Stop'
-$projectRoot = $PSScriptRoot
+$projectRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..'))
 $saved = Get-Content -LiteralPath (Join-Path $projectRoot 'test-runtime/prototype-logs/services.json') | ConvertFrom-Json
 $apiListener = Get-NetTCPConnection -LocalPort 18501 -State Listen
 $frontListener = Get-NetTCPConnection -LocalPort 13310 -State Listen

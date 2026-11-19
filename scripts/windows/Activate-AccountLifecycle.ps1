@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Stop'
-$projectRoot = [IO.Path]::GetFullPath($PSScriptRoot)
+$projectRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..'))
 $frontRoot = Join-Path $projectRoot 'frontend'
 $buildPath = Join-Path $frontRoot '.next'
 $backupPath = Join-Path $projectRoot 'test-runtime/account-lifecycle-checkpoint-20261005/frontend-build'
@@ -17,7 +17,7 @@ $listener = @(Get-NetTCPConnection -LocalPort 13310 -State Listen -ErrorAction S
 if ($listener.Count -ne 1) { throw 'Expected one prototype frontend listener.' }
 $process = Get-CimInstance Win32_Process -Filter "ProcessId=$($listener[0].OwningProcess)"
 if (!$process -or $process.ProcessId -ne $saved.frontend_pid -or $process.CommandLine -notmatch 'next.*start.*13310') { throw 'Frontend process does not match the saved prototype.' }
-& (Join-Path $projectRoot 'Restart-HardenedApi.ps1')
+& (Join-Path $PSScriptRoot 'Restart-HardenedApi.ps1')
 Stop-Process -Id $process.ProcessId
 Move-Item -LiteralPath $buildPath -Destination $backupPath
 $env:NEXT_PUBLIC_API_BASE_URL = 'http://localhost:18501'
@@ -29,8 +29,8 @@ try {
 } catch {
     if (Test-Path -LiteralPath $buildPath) { Move-Item -LiteralPath $buildPath -Destination $failedPath }
     Move-Item -LiteralPath $backupPath -Destination $buildPath
-    & (Join-Path $projectRoot 'Start-UpgradedFrontend.ps1')
+    & (Join-Path $PSScriptRoot 'Start-UpgradedFrontend.ps1')
     throw
 } finally { Pop-Location }
-& (Join-Path $projectRoot 'Start-UpgradedFrontend.ps1')
+& (Join-Path $PSScriptRoot 'Start-UpgradedFrontend.ps1')
 Write-Output 'Account lifecycle activated locally; old frontend build preserved. No account deleted.'
