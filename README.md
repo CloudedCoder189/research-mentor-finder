@@ -151,6 +151,10 @@ research-mentor-finder/
 └── README.md          # Project documentation
 ```
 
+The current application lives in `api/` and `frontend/`. Historical Streamlit
+tools and snapshots are retained in [`legacy/`](legacy/README.md); its
+one-time maintenance scripts should not be run against production data.
+
 ## Testing
 
 Install the test dependencies in your active virtual environment and run the offline Python suite:
