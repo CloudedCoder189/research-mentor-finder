@@ -149,7 +149,6 @@ export default function OnboardingPage() {
    * shown on the step itself.
    */
   const gotoStep = (index: number) => {
-    // Leaving Interests (forward from step 0, or a direct jump) requires them.
     if (step === 0 && index > 0 && profile.interests.length === 0) {
       setAttemptedInterestGuard(true);
       return;

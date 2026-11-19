@@ -168,7 +168,6 @@ def test_no_invented_student_experience() -> None:
     }
     match = score_for_profile(record, profile)
     assert "Professor Fox" in " ".join(match["reasons"])
-    # Experience was empty, so no projects/personal claims should appear.
     assert not any(reason.lower().startswith("your experience") for reason in match["reasons"])
 
 

@@ -496,7 +496,6 @@ def parse_configurable_directory_html(html_text: str, config: FacultyDirectoryCo
     soup = BeautifulSoup(html_text, "html.parser")
     candidates = _table_candidates(soup, config)
 
-    # Heading/card directories and directories where email appears inside a profile card.
     elements: list[Tag] = []
     for selector in config.directory_name_selectors:
         elements.extend(soup.select(selector))
@@ -537,7 +536,6 @@ def parse_configurable_directory_html(html_text: str, config: FacultyDirectoryCo
         if existing is None:
             deduped[key] = candidate
             continue
-        # Merge richer data from duplicate nested containers.
         for attr in ("title", "research_interests", "email", "profile_url", "website_url"):
             current = getattr(existing, attr)
             incoming = getattr(candidate, attr)

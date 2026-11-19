@@ -127,7 +127,6 @@ def query_concepts(query: str) -> list[str]:
             concepts.append(category)
             remaining = re.sub(pattern, " ", remaining)
 
-    # Also detect ontology keywords in natural-language queries.
     for category in categorize_with_keywords(remaining):
         if category != "Other Computing Research":
             concepts.append(category)
