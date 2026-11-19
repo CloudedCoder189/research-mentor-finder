@@ -1,6 +1,6 @@
 @echo off
 setlocal
-cd /d "%~dp0"
+cd /d "%~dp0.."
 
 where python >nul 2>nul
 if errorlevel 1 (
@@ -22,7 +22,7 @@ echo Installing or confirming required packages...
 if errorlevel 1 goto error
 
 echo.
-echo Setup complete. Run run_windows.bat to start the website.
+echo Setup complete. Run legacy\run_windows.bat to start the historical Streamlit application.
 pause
 exit /b 0
 

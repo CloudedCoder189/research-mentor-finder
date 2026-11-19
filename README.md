@@ -151,9 +151,12 @@ research-mentor-finder/
 └── README.md          # Project documentation
 ```
 
-The current application lives in `api/` and `frontend/`. Historical Streamlit
-tools and snapshots are retained in [`legacy/`](legacy/README.md); its
-one-time maintenance scripts should not be run against production data.
+The current application lives in `api/` and `frontend/`. The older
+Streamlit application and Windows launchers are kept in
+[`legacy/`](legacy/README.md). The optional data-refresh command lives in
+`scripts/refresh_database.py` (run as `python -m scripts.refresh_database`
+from the repository root after reviewing its effect on your database).
+Historical maintenance tools should not be run against production data.
 
 ## Testing
 

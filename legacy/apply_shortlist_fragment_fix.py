@@ -4,12 +4,12 @@ from pathlib import Path
 from datetime import datetime
 import shutil
 
-APP = Path("app.py")
+APP = Path(__file__).resolve().parent / "app.py"
 
 if not APP.exists():
     raise SystemExit(
         "app.py was not found. Put this patcher in the same folder as app.py, "
-        "or run it from your project folder."
+        "The legacy Streamlit app must be present alongside this patcher."
     )
 
 text = APP.read_text(encoding="utf-8")
