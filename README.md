@@ -6,6 +6,10 @@ Research Mentor Finder is a web application designed to help high school and col
 
 **Live application:** https://researchmentorfinder.org
 
+## Application Preview
+
+![Research Mentor Finder discovery interface](docs/screenshots/research-mentor-finder.webp)
+
 ## Features
 
 - **Researcher discovery:** Search university researchers using natural-language queries.
