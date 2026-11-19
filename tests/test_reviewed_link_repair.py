@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 import sqlite3
 from contextlib import closing
 
@@ -7,7 +8,9 @@ import pytest
 import database
 from api.retention import initialize
 from api.schemas.researcher import profile_dto
-from deploy.pilot.repair_links import PLAN, apply_reviewed_links, load_plan
+from deploy.pilot.repair_links import apply_reviewed_links, load_plan
+
+PUBLIC_PLAN = Path(__file__).parent / "fixtures" / "link-repairs.json"
 
 
 @pytest.fixture
@@ -17,7 +20,7 @@ def batch(tmp_path, monkeypatch):
     monkeypatch.setenv('RETENTION_ROOT', str(tmp_path / 'managed'))
     monkeypatch.setenv('RETENTION_KEY_FILE', str(tmp_path / 'key'))
     database.initialize_database(run_maintenance=False)
-    item = load_plan()['records'][0]
+    item = load_plan(PUBLIC_PLAN)['records'][0]
     database.upsert_professors([{'name': item['name'], 'university': item['university'], 'email': 'academic@example.test',
                                **{k: v['before'] for k, v in item['changes'].items()}}])
     with closing(sqlite3.connect(path)) as c:
@@ -39,7 +42,7 @@ def snapshot(path):
 def test_repair_preserves_private_data_and_embedding_with_encrypted_rollback(batch):
     path, store, item = batch
     before = snapshot(path)
-    report = apply_reviewed_links(path)
+    report = apply_reviewed_links(path, plan_path=PUBLIC_PLAN)
     assert report['updated_records'] == 1 and report['fresh_encrypted_backup']
     after = snapshot(path)
     for table in before.keys() - {'professors', 'app_migrations'}:
@@ -63,11 +66,11 @@ def test_repair_preserves_private_data_and_embedding_with_encrypted_rollback(bat
 
 def test_repeat_is_noop_without_another_backup(batch):
     path, _, _ = batch
-    apply_reviewed_links(path)
+    apply_reviewed_links(path, plan_path=PUBLIC_PLAN)
     before = snapshot(path)
     def forbidden():
         raise AssertionError('Repeated repair must not create another backup')
-    assert apply_reviewed_links(path, backup=forbidden)['idempotent']
+    assert apply_reviewed_links(path, plan_path=PUBLIC_PLAN, backup=forbidden)['idempotent']
     assert snapshot(path) == before
 
 
@@ -75,7 +78,7 @@ def test_backup_failure_leaves_every_table_unchanged(batch):
     path, _, _ = batch
     before = snapshot(path)
     with pytest.raises(ValueError, match='backup'):
-        apply_reviewed_links(path, backup=lambda: False)
+        apply_reviewed_links(path, plan_path=PUBLIC_PLAN, backup=lambda: False)
     assert snapshot(path) == before
 
 
@@ -86,7 +89,7 @@ def test_changed_identity_or_link_refuses_before_backup(batch, change):
         c.execute('UPDATE professors SET '+change); c.commit()
     before = snapshot(path)
     with pytest.raises(ValueError, match='changed'):
-        apply_reviewed_links(path, backup=lambda: pytest.fail('Backup should not run'))
+        apply_reviewed_links(path, plan_path=PUBLIC_PLAN, backup=lambda: pytest.fail('Backup should not run'))
     assert snapshot(path) == before
 
 
@@ -97,7 +100,7 @@ def test_update_failure_rolls_back_all_tables(batch):
         c.commit()
     before = snapshot(path)
     with pytest.raises(sqlite3.IntegrityError):
-        apply_reviewed_links(path)
+        apply_reviewed_links(path, plan_path=PUBLIC_PLAN)
     assert snapshot(path) == before
 
 
@@ -105,7 +108,7 @@ def test_different_database_refused(batch, tmp_path):
     path, _, _ = batch
     other = tmp_path/'other.db'; other.write_bytes(path.read_bytes())
     with pytest.raises(ValueError, match='identity'):
-        apply_reviewed_links(other)
+        apply_reviewed_links(other, plan_path=PUBLIC_PLAN)
 
 
 @pytest.mark.parametrize('value', [None, '', ' Not publicly available '])
@@ -116,7 +119,7 @@ def test_absent_link_placeholders_never_become_clickable_urls(value):
 
 
 def test_repair_plan_cannot_change_academic_or_private_fields(tmp_path):
-    plan = load_plan()
+    plan = load_plan(PUBLIC_PLAN)
     plan['records'][0]['changes']['title'] = {'before':'Old title','after':'New title'}
     file = tmp_path/'unsafe.json'; file.write_text(json.dumps(plan), encoding='utf-8')
     with pytest.raises(ValueError, match='Only reviewed URL'):

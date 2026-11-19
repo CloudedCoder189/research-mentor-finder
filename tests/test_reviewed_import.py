@@ -20,7 +20,7 @@ def batch(tmp_path, monkeypatch):
     database.upsert_user(user_id="google:synthetic", email="synthetic@example.test")
     store = initialize()
     store.maintain()
-    records = json.loads((ROOT / "evidence/public-launch-preparation-2026-10-11/professor-candidates.json").read_text())["records"]
+    records = json.loads((ROOT / "tests/fixtures/professor-candidates.json").read_text())["records"]
     return path, store, records
 
 
