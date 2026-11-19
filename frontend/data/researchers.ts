@@ -1,3 +1,8 @@
+// Fictional, historical UI fixtures only. Names, academic affiliations, emails,
+// URLs, and verification labels below are illustrative, not confirmed faculty data.
+// Live researcher discovery uses the FastAPI backend, not these examples.
+// Do not use these contacts for outreach or present them as verified profiles.
+
 import type { Researcher } from "@/types";
 
 export const RESEARCHERS: Researcher[] = [
