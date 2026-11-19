@@ -66,8 +66,9 @@ def test_parallel_requests_cannot_overrun_allowance():
 
 
 def request(peer, headers):
+    pairs = headers.items() if isinstance(headers, dict) else headers
     return Request({"type": "http", "method": "GET", "path": "/",
-                    "client": (peer, 1234), "headers": [(k.lower().encode(), v.encode()) for k, v in headers.items()]})
+                    "client": (peer, 1234), "headers": [(k.lower().encode(), v.encode()) for k, v in pairs]})
 
 
 @pytest.mark.parametrize("header", ["X-RMF-Client-IP", "X-Forwarded-For", "X-Real-IP"])
@@ -83,6 +84,22 @@ def test_loopback_requires_explicit_proxy_trust_and_valid_single_global_ip(monke
     assert client_address(request("127.0.0.1", {"X-RMF-Client-IP": "8.8.8.8"})) == "8.8.8.8"
     for invalid in ["garbage", "8.8.8.8, 1.1.1.1", "10.0.0.1", "::1"]:
         assert client_address(request("127.0.0.1", {"X-RMF-Client-IP": invalid})) == "127.0.0.1"
+
+
+@pytest.mark.parametrize("values", [
+    ["8.8.8.8", "1.1.1.1"],
+    ["8.8.8.8", "8.8.8.8"],
+])
+def test_duplicate_forwarded_client_ip_headers_fall_back_to_socket_peer(monkeypatch, values):
+    monkeypatch.setenv("RATE_LIMIT_TRUST_PILOT_PROXY", "1")
+    headers = [("X-RMF-Client-IP", value) for value in values]
+    assert client_address(request("127.0.0.1", headers)) == "127.0.0.1"
+
+
+@pytest.mark.parametrize("name", ["X-Real-IP", "X-Forwarded-For", "Forwarded"])
+def test_unverified_forwarding_headers_never_choose_client_identity(monkeypatch, name):
+    monkeypatch.setenv("RATE_LIMIT_TRUST_PILOT_PROXY", "1")
+    assert client_address(request("127.0.0.1", {name: "8.8.8.8"})) == "127.0.0.1"
 
 
 def test_ipv6_privacy_addresses_share_network_bucket():
@@ -158,5 +175,7 @@ def test_managed_proxy_contract_and_packaging():
     assert settings(ROOT / "test-runtime/synthetic-managed")["RATE_LIMIT_TRUST_PILOT_PROXY"] == "1"
     runner = (ROOT / "scripts/run_managed_api.py").read_text()
     assert "proxy_headers=False" in runner and 'host="127.0.0.1"' in runner
-    caddy = (ROOT / "deploy/pilot/Caddyfile").read_text()
-    assert "header_up X-RMF-Client-IP {http.request.header.X-Real-IP}" in caddy
+    for name in ("Caddyfile", "Caddyfile.public"):
+        caddy = (ROOT / "deploy/pilot" / name).read_text()
+        assert "header_up X-RMF-Client-IP {http.request.header.X-Real-IP}" in caddy
+        assert "header_up -Authorization" in caddy

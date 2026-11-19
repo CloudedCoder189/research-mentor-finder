@@ -71,13 +71,16 @@ def client_address(request):
     except ValueError:
         return peer
     if address.is_loopback and os.getenv("RATE_LIMIT_TRUST_PILOT_PROXY") == "1":
-        supplied = request.headers.get("X-RMF-Client-IP", "")
-        try:
-            forwarded = ipaddress.ip_address(supplied)
-            if forwarded.is_global:
-                address = forwarded
-        except ValueError:
-            pass
+        # A single Caddy-injected value is required. Duplicate or malformed
+        # headers fall back to the socket peer rather than choosing a value.
+        forwarded_values = request.headers.getlist("X-RMF-Client-IP")
+        if len(forwarded_values) == 1:
+            try:
+                forwarded = ipaddress.ip_address(forwarded_values[0])
+                if forwarded.is_global:
+                    address = forwarded
+            except ValueError:
+                pass
     # Group IPv6 privacy addresses from the same /64 to limit easy rotation.
     if address.version == 6:
         return str(ipaddress.ip_network(f"{address}/64", strict=False))
