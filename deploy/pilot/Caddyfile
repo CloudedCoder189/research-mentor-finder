@@ -38,6 +38,9 @@
         handle @api {
             reverse_proxy 127.0.0.1:18501 {
                 header_up -Authorization
+                # This value is trusted only from Railway's sanitized public
+                # HTTP edge. Do not expose this gateway via an unsanitized TCP
+                # proxy or an untrusted service on Railway private networking.
                 header_up X-RMF-Client-IP {http.request.header.X-Real-IP}
             }
         }
