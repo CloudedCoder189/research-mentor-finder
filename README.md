@@ -122,6 +122,11 @@ Developers can explore the application using the included fictional demonstratio
 
 Researcher matches do not guarantee that a professor is accepting students or offering research opportunities.
 
+## Additional documentation
+
+- [Official university directory sources](docs/UNIVERSITY_SOURCES.md)
+- [Documentation index](docs/README.md), including archived development notes
+
 ## Privacy and Security
 
 - Real API keys are stored outside version-controlled source code.

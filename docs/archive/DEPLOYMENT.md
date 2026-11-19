@@ -2,9 +2,9 @@
 
 **Not the deployment guide for the current application.** These notes describe an
 earlier Streamlit build, not the live Next.js/FastAPI application. To run the
-current application locally, use the [main README](README.md). The separate
-pilot deployment code is in [deploy/pilot](deploy/pilot), with production
-configuration checks in [api/production_config.py](api/production_config.py).
+current application locally, use the [main README](../../README.md). The separate
+pilot deployment code is in [deploy/pilot](../../deploy/pilot), with production
+configuration checks in [api/production_config.py](../../api/production_config.py).
 The steps below are preserved as historical context, not a complete or
 validated production deployment recipe.
 
