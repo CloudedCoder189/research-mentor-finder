@@ -6,6 +6,10 @@ Research Mentor Finder is a web application designed to help high school and col
 
 **Live application:** https://researchmentorfinder.org
 
+## Application Preview
+
+![Research Mentor Finder discovery interface](docs/screenshots/research-mentor-finder.webp)
+
 ## Features
 
 - **Researcher discovery:** Search university researchers using natural-language queries.
@@ -43,8 +47,6 @@ Research Mentor Finder is a web application designed to help high school and col
 git clone https://github.com/CloudedCoder189/research-mentor-finder.git
 cd research-mentor-finder
 ```
-
-Replace the repository URL with the actual GitHub URL after publication.
 
 ### 2. Configure the backend
 
@@ -146,9 +148,10 @@ research-mentor-finder/
 
 ## Testing
 
-Run the Python test suite:
+Install the test dependencies in your active virtual environment and run the offline Python suite:
 
 ```powershell
+python -m pip install -r requirements-dev.txt
 python -m pytest
 ```
 

@@ -1,11 +1,12 @@
 """Read-only source snapshot and content fingerprints; no source imports."""
+import os
 import hashlib
 import json
 import sqlite3
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = Path(r'C:\Users\nirmi\Downloads\college-professor-finder-v9.3.1-complete - Copy\college-professor-finder-v9.3.1-complete\data\professors.db')
+SOURCE = Path(os.environ.get("RMF_ACCEPTANCE_SOURCE", ROOT / "test-runtime" / "original" / "data" / "professors.db")).expanduser().resolve()
 DEST = ROOT / 'test-runtime' / 'real-acceptance-20261004.db'
 EVIDENCE = ROOT / 'evidence' / 'real-acceptance-2026-10-04'
 

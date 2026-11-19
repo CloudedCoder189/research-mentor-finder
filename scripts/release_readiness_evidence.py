@@ -1,5 +1,6 @@
 """Preserve scoped release-review evidence; never exposes private row contents."""
 from pathlib import Path
+import os
 import hashlib
 import json
 import sqlite3
@@ -8,7 +9,7 @@ import difflib
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "evidence/release-readiness-2026-10-05"
-ORIGINAL = Path(r"C:\Users\nirmi\Downloads\college-professor-finder-v9.3.1-complete - Copy\college-professor-finder-v9.3.1-complete")
+ORIGINAL = Path(os.environ.get("RMF_ORIGINAL_ROOT", ROOT / "test-runtime" / "original")).expanduser().resolve()
 FILES = ["api/main.py", "api/auth/config.py", "api/production_config.py",
          "services/categorization.py", "frontend/app/privacy/page.tsx", "tests/test_release_readiness.py"]
 

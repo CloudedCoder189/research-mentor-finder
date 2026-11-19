@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "reviewed_at": "2026-01-01T00:00:00Z",
+  "records": [
+    {
+      "id": 101,
+      "name": "Synthetic Link Researcher",
+      "university": "Fictional Research University",
+      "changes": {
+        "website_url": {
+          "before": "https://example.edu/old-synthetic-profile",
+          "after": "https://example.edu/new-synthetic-profile"
+        }
+      }
+    }
+  ]
+}

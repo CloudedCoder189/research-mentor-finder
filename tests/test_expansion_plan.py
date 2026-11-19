@@ -16,7 +16,7 @@ def expansion(tmp_path, monkeypatch):
     database.initialize_database(run_maintenance=False)
     database.upsert_professors([{"name": "Existing researcher", "university": "Existing University", "email": "existing@example.edu"}])
     database.upsert_user(user_id="synthetic-owner", email="student@example.test")
-    rows = json.loads((ROOT / "evidence/public-launch-preparation-2026-10-11/professor-candidates.json").read_text(encoding="utf-8"))["records"]
+    rows = json.loads((ROOT / "tests/fixtures/professor-candidates.json").read_text(encoding="utf-8"))["records"]
     return path, rows
 
 
