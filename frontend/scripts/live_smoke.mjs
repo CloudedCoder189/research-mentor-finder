@@ -133,7 +133,6 @@ try {
   );
   console.log(`sentinel confirmed: backend serves the isolated copy`);
 
-  // Sign in via the local developer account.
   const loginRes = await fetch(`${API}/api/auth/dev-login`, { method: "POST" });
   if (loginRes.status !== 200) throw new Error("/api/auth/dev-login -> HTTP " + loginRes.status);
   const loginBody = await loginRes.json();
@@ -166,7 +165,6 @@ try {
   const me = await (await authed("/api/auth/me")).json();
   if (me.authenticated !== true) throw new Error("/api/auth/me reported not authenticated");
 
-  // Authenticated student profile round-trip.
   const profilePayload = {
     interests: ["Machine learning"],
     interest_text: "applied deep learning for visual recognition",
@@ -188,7 +186,6 @@ try {
     throw new Error("profile GET did not round-trip the saved profile");
   }
 
-  // Gmail status is a protected endpoint now.
   const gmail = await (await authed("/api/gmail/status")).json();
   if (typeof gmail.connected !== "boolean" || typeof gmail.account_email !== "string") {
     throw new Error("unexpected Gmail status payload");
@@ -368,7 +365,6 @@ try {
     throw new Error("explain returned the wrong researcher");
   }
 
-  // Clean up the test session.
   const logoutRes = await authed("/api/auth/logout", { method: "POST" });
   if (logoutRes.status !== 200) throw new Error("/api/auth/logout -> HTTP " + logoutRes.status);
 

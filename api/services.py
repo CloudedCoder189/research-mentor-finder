@@ -401,7 +401,6 @@ def set_saved(professor_id: int, saved: bool, *, user_id: str) -> MutationResult
 def list_outreach(*, user_id: str) -> OutreachListResponse:
     rows = fetch_outreach_professors(user_id=user_id)
     results = [outreach_result_dto(row) for row in rows]
-    # Default dashboard order: needs-attention (follow-up due) first.
     results.sort(
         key=lambda item: (
             0 if item.outreach.follow_up_due else 1,

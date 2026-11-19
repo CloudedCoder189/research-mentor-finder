@@ -158,7 +158,6 @@ def _dual_labeled_with_reply_payload() -> dict:
     }
 
 
-# --- not linked --------------------------------------------------------------
 
 
 def test_sync_unlinked_row_returns_not_linked_without_any_gmail_call(env, monkeypatch) -> None:
@@ -175,7 +174,6 @@ def test_sync_unlinked_row_returns_not_linked_without_any_gmail_call(env, monkey
     assert body["outreach"]["outreach"]["status"] == "Drafted"
 
 
-# --- not sent yet ------------------------------------------------------------
 
 
 def test_sync_empty_thread_is_not_sent(env, monkeypatch) -> None:
@@ -223,7 +221,6 @@ def test_sync_thread_404_is_treated_as_not_sent(env, monkeypatch) -> None:
     assert "no sent message" in body["message"]
 
 
-# --- sent detected -----------------------------------------------------------
 
 
 def test_sync_detects_sent_and_promotes_drafted_to_sent(env, monkeypatch) -> None:
@@ -240,7 +237,6 @@ def test_sync_detects_sent_and_promotes_drafted_to_sent(env, monkeypatch) -> Non
     assert body["outreach"]["outreach"]["gmail_last_checked_at"]
 
 
-# --- reply detected ----------------------------------------------------------
 
 
 def test_sync_detects_reply_and_sets_replied(env, monkeypatch) -> None:
@@ -288,7 +284,6 @@ def test_sync_later_reply_after_sent_is_detected_on_second_check(env, monkeypatc
     assert second["outreach"]["outreach"]["status"] == "Replied"
 
 
-# --- follow-up due is deterministic and derived -------------------------------
 
 
 def test_follow_up_due_derived_from_real_gmail_sent_date(env, monkeypatch) -> None:
@@ -334,7 +329,6 @@ def test_follow_up_not_due_when_no_follow_up_date_set(env, monkeypatch) -> None:
     assert body["outreach"]["outreach"]["follow_up_due"] is False
 
 
-# --- manual terminal states preserved ----------------------------------------
 
 
 @pytest.mark.parametrize("stored,frontend", [("Rejected", "Closed"), ("Meeting scheduled", "Meeting scheduled")])
@@ -354,7 +348,6 @@ def test_terminal_manual_state_never_overwritten_by_gmail(env, monkeypatch, stor
     assert stored_row["gmail_replied_at"]
 
 
-# --- sync all ----------------------------------------------------------------
 
 
 def test_sync_all_checks_linked_rows_only(env, monkeypatch) -> None:
@@ -383,7 +376,6 @@ def test_sync_all_checks_linked_rows_only(env, monkeypatch) -> None:
     assert [item["professor_id"] for item in body["results"]] == [second]
 
 
-# --- failures ----------------------------------------------------------------
 
 
 def test_sync_gmail_api_error_returns_502_and_preserves_state(env, monkeypatch) -> None:
@@ -423,7 +415,6 @@ def test_sync_revoked_or_missing_connection_returns_401(env, monkeypatch) -> Non
     assert "not connected" in response.json()["detail"].lower()
 
 
-# --- isolation ---------------------------------------------------------------
 
 
 def test_sync_is_scoped_per_user(env, monkeypatch) -> None:
@@ -463,7 +454,6 @@ def test_unknown_researcher_returns_404(env, monkeypatch) -> None:
     assert response.status_code == 404
 
 
-# --- write boundary + no auto-send -------------------------------------------
 
 
 def test_sync_only_gets_thread_metadata_and_never_sends(env, monkeypatch) -> None:

@@ -22,7 +22,6 @@ const CHECKS = [
   { path: "/outreach", needle: "Checking your session…" },
   { path: "/outreach/compose/747", needle: "Checking your session…" },
   { path: "/researchers/does-not-exist", needle: "Back to Discover" },
-  // Footer destinations must be real routes, not dead fragments.
   { path: "/about", needle: "About" },
   { path: "/contact", needle: "Contact" },
   { path: "/privacy", needle: "Privacy" },

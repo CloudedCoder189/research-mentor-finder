@@ -66,7 +66,6 @@ from services.taxonomy import infer_taxonomy
 from services.verification import OFFICIAL_DOMAINS
 
 
-# ---------- Fixtures ----------
 
 
 def _cse_roster_page(slugs: list[str]) -> str:
@@ -244,7 +243,6 @@ def _wsu_item(
     }
 
 
-# ---------- University of Washington: parse helpers ----------
 
 
 def test_uw_cse_slugs_deduped_in_order():
@@ -380,7 +378,6 @@ def test_uw_combined_uses_floor_guard_message():
     assert sub._floor_message(91) is None
 
 
-# ---------- Washington State University ----------
 
 
 def test_wsu_keep_faculty_classification():
@@ -471,7 +468,6 @@ def test_wsu_organization_ids_registered():
         assert cls.authoritative_roster is False
 
 
-# ---------- Western Washington University ----------
 
 
 def test_wwu_parse_cards_returns_all_rows_with_emails():
@@ -498,7 +494,6 @@ def test_wwu_scrapers_never_authoritative():
         assert cls.authoritative_roster is False
 
 
-# ---------- Canonical-first cross-list deduplication ----------
 
 
 def _professor(email: str, department: str) -> ScrapedProfessor:
@@ -528,7 +523,6 @@ def test_uw_shared_full_mailbox_email_rejected():
     assert combined == []
 
 
-# ---------- Registration, taxonomy, verification wiring ----------
 
 
 def test_phase4_universities_registered():

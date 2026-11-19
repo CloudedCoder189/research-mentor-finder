@@ -164,7 +164,6 @@ def test_search_query_returns_ranked_results(client: TestClient) -> None:
             "Possible match",
         }
         assert row["match"]["reason"]
-    # Ranking is descending by score.
     scores = [row["match"]["score"] for row in body["results"]]
     assert scores == sorted(scores, reverse=True)
     _assert_no_internal_fields(body)
