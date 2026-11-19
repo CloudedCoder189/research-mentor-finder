@@ -172,10 +172,20 @@ python -m pytest
 Run frontend checks from the `frontend` directory:
 
 ```powershell
+npm run test:draft
+npm run test:profile
+npm audit --audit-level=high
 npm run lint
 npm run typecheck
 npm run build
 ```
+
+The GitHub CI workflow also checks installed Python dependencies with
+`pip-audit==2.10.1` and audits npm packages for high/critical vulnerabilities.
+These checks use public advisory databases and require network access in CI;
+they do not replace code review, secret scanning, or deployment testing.
+Python's `pip-audit --local` includes development/test tooling installed in
+the CI environment in addition to the runtime packages.
 
 ## Congressional App Challenge
 
