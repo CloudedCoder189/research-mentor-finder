@@ -9,3 +9,9 @@ These documents are preserved for project history. They are **not** current inst
 - [START_HERE.txt](START_HERE.txt) — older introductory setup note.
 
 For current local setup, follow the [main README](../../README.md).
+
+Other archived artifacts:
+
+- [Pilot feedback form](PILOT_FEEDBACK.html) — offline, historical pilot survey.
+- [Legacy root package metadata](legacy-root-package.json) — obsolete Streamlit-era npm placeholder; **not** the Next.js frontend package (which is at [frontend/package.json](../../frontend/package.json)).
+- [Older one-time Python patch and audit scripts](../../legacy/README.md).
