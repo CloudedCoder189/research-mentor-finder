@@ -1,7 +1,7 @@
 param([switch]$EnableGoogleSignIn, [switch]$EnableGmail)
 
 $ErrorActionPreference = 'Stop'
-$projectRoot = $PSScriptRoot
+$projectRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..'))
 $env:RETENTION_ROOT = Join-Path $projectRoot 'test-runtime/managed-retention'
 $env:RETENTION_KEY_FILE = Join-Path $projectRoot 'test-runtime/retention-key.txt'
 if (!(Test-Path -LiteralPath (Join-Path $env:RETENTION_ROOT 'store.json'))) { throw 'Initialize managed retention before starting services.' }

@@ -1,5 +1,6 @@
 $ErrorActionPreference = 'Stop'
-$saved = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'test-runtime/prototype-logs/services.json') | ConvertFrom-Json
+$projectRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..'))
+$saved = Get-Content -LiteralPath (Join-Path $projectRoot 'test-runtime/prototype-logs/services.json') | ConvertFrom-Json
 $validated = @()
 foreach ($entry in @(@{port=18501; id=$saved.api_pid; pattern='run_managed_api.py'}, @{port=13310; id=$saved.frontend_pid; pattern='run_managed_frontend.mjs'; child='next.*start.*13310'})) {
     $listener = @(Get-NetTCPConnection -LocalPort $entry.port -State Listen -ErrorAction SilentlyContinue)
