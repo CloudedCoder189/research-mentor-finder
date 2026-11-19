@@ -91,10 +91,15 @@ export default function PrivacyPage() {
             operators must apply it before restoring a backup.
           </p>
           <p className="mt-2">
-            Historical manual backups, logs and review evidence remain outside this managed policy.
-            Deletion does not erase those older copies, browser data on other devices, or data held
-            by Google or an AI provider. Historical copies need an explicit retention decision
-            before public launch. Public researcher records are retained separately from account data.
+            Historical pre-launch manual backups, logs and review evidence remain private and
+            outside automatic managed expiry. These historical copies require an explicit operator
+            retention decision; there is no automatic deletion guarantee for them. Account-bearing
+            copies are not published or used as public demo data. New public account data is not
+            copied into manual development fixtures. Account deletion does not automatically
+            erase historical copies; contact us for review of those copies. Recovery must apply
+            deletion receipts before restoring account data. Browser data on other devices and
+            data held by Google or an AI provider are separate. Public researcher records and
+            redacted non-personal release evidence may be retained separately.
           </p>
         </section>
 
